@@ -101,3 +101,19 @@ body {
     color: #00E0FF;
     border: 2px solid #00E0FF;
 }
+
+/* Signup Options Screen Styles */
+.signup-options-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.signup-options-container h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+}

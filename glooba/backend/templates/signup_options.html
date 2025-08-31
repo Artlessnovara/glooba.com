@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to GLOOBA</title>
+    <title>Create Account - GLOOBA</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="welcome-container">
-        <h1 class="logo">🌀 GLOOBA</h1>
-        <p class="subtext">Connect. Share. Glow.</p>
+    <div class="signup-options-container">
+        <h2>How do you want to sign up?</h2>
         <div class="auth-buttons">
-            <a href="#" class="btn btn-primary">Log In</a>
-            <a href="{{ url_for('signup') }}" class="btn btn-secondary">Create Account</a>
+            <a href="#" class="btn btn-secondary">Sign up with Phone</a>
+            <a href="#" class="btn btn-secondary">Sign up with Email</a>
         </div>
     </div>
 </body>
