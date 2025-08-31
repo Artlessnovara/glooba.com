@@ -55,3 +55,49 @@ body {
     font-size: 1.5rem;
     color: lightgray;
 }
+
+/* Welcome Screen Styles */
+.welcome-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.auth-buttons {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 80%;
+    max-width: 300px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 224, 255, 0.2);
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #00E0FF, #0066FF);
+    color: white;
+    border: none;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: #00E0FF;
+    border: 2px solid #00E0FF;
+}
