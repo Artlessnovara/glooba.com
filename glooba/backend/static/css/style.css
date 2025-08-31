@@ -260,3 +260,50 @@ body {
 .skip-link:hover {
     text-decoration: underline;
 }
+
+/* Login Form Enhancements */
+.flash-messages {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #ff4d4d;
+    color: white;
+    text-align: center;
+}
+
+.password-group {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 42px; /* Adjust to align with the input field */
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: lightgray;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: lightgray;
+}
+
+.forgot-password {
+    color: #00E0FF;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}

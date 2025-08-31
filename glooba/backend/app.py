@@ -1,6 +1,6 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for
-from flask_login import login_user, current_user, login_required
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_login import login_user, current_user, login_required, logout_user
 from werkzeug.utils import secure_filename
 from glooba.backend.config import Config
 from glooba.backend.extensions import db, migrate, login_manager
@@ -43,22 +43,46 @@ def create_app(config_class=Config):
             username = request.form.get('username')
             password = request.form.get('password')
             if not full_name or not username or not password:
+                flash('All fields are required.')
                 return redirect(url_for('signup_email'))
             dummy_email = f'{username}@glooba.com'
             if User.query.filter_by(username=username).first() or User.query.filter_by(email=dummy_email).first():
+                flash('Username or email already exists.')
                 return redirect(url_for('signup_email'))
             new_user = User(full_name=full_name, username=username, email=dummy_email)
             new_user.set_password(password)
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user)
+            login_user(new_user, remember=True)
             return redirect(url_for('profile_setup'))
         return render_template('signup.html')
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
-        # Login logic will be implemented in Phase 3
+        if current_user.is_authenticated:
+            return redirect(url_for('splash')) # Redirect to home if already logged in
+        if request.method == 'POST':
+            username = request.form.get('username')
+            password = request.form.get('password')
+            remember = True if request.form.get('remember') else False
+
+            user = User.query.filter_by(username=username).first()
+            # Also check if they entered an email
+            if not user:
+                user = User.query.filter_by(email=username).first()
+
+            if user is None or not user.check_password(password):
+                flash('Invalid username or password')
+                return redirect(url_for('login'))
+
+            login_user(user, remember=remember)
+            return redirect(url_for('splash')) # Redirect to a real homepage later
         return render_template('login.html')
+
+    @app.route('/logout')
+    def logout():
+        logout_user()
+        return redirect(url_for('welcome'))
 
     @app.route('/profile/setup', methods=['GET', 'POST'])
     @login_required
