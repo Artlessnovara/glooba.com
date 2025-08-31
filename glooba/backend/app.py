@@ -76,7 +76,12 @@ def create_app(config_class=Config):
                     file.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
                     current_user.profile_pic = f'uploads/profile_pics/{unique_filename}'
             db.session.commit()
-            return redirect(url_for('splash'))
+            return redirect(url_for('personalization'))
         return render_template('profile_setup.html')
+
+    @app.route('/personalization')
+    @login_required
+    def personalization():
+        return render_template('personalization.html')
 
     return app
