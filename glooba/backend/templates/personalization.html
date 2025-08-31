@@ -6,7 +6,7 @@
     <title>Find Friends - GLOOBA</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
+<body class="auth-body">
     <div class="form-container">
         <h2>Find your friends</h2>
         <p class="subtext">Sync your contacts to easily find people you know on GLOOBA.</p>
@@ -15,7 +15,7 @@
             <a href="#" class="btn btn-primary">Sync Contacts</a>
         </div>
 
-        <a href="{{ url_for('splash') }}" class="skip-link">Skip for now</a>
+        <a href="{{ url_for('home') }}" class="skip-link">Skip for now</a>
     </div>
 </body>
 </html>

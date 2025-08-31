@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GLOOBA{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="top-bar">
+        <div class="logo-container">
+            <a href="{{ url_for('home') }}" class="logo-link">🌀 GLOOBA</a>
+        </div>
+        <div class="search-container">
+            <!-- Search bar will go here -->
+        </div>
+        <div class="menu-container">
+            <a href="#" class="icon-link">🔍</a>
+            <a href="#" class="icon-link">☰</a>
+        </div>
+    </header>
+
+    <nav class="navigation-row">
+        <a href="#" class="nav-tab active">🏠 Home</a>
+        <a href="#" class="nav-tab">🌐 Discover</a>
+        <a href="#" class="nav-tab">🎥 Reels</a>
+        <a href="#" class="nav-tab">👤 Profile</a>
+        <a href="#" class="nav-tab">🔔 Notifications</a>
+        <a href="#" class="nav-tab">💬 Messenger</a>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <a href="#" class="fab">+</a>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

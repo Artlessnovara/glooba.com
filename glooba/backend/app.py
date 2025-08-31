@@ -28,6 +28,11 @@ def create_app(config_class=Config):
     def splash():
         return render_template('splash.html')
 
+    @app.route('/home')
+    @login_required
+    def home():
+        return render_template('home.html')
+
     @app.route('/welcome')
     def welcome():
         return render_template('welcome.html')
@@ -76,7 +81,7 @@ def create_app(config_class=Config):
                 return redirect(url_for('login'))
 
             login_user(user, remember=remember)
-            return redirect(url_for('splash')) # Redirect to a real homepage later
+            return redirect(url_for('home'))
         return render_template('login.html')
 
     @app.route('/logout')

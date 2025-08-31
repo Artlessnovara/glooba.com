@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Home - GLOOBA{% endblock %}
+
+{% block content %}
+    <div class="home-feed">
+        <h1>Home Feed</h1>
+        <p>Welcome, {{ current_user.username }}!</p>
+        <!-- Stories row and main feed content will go here -->
+    </div>
+{% endblock %}
