@@ -14,5 +14,9 @@ def welcome():
 def signup():
     return render_template('signup_options.html')
 
+@app.route('/signup/email')
+def signup_email():
+    return render_template('signup.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

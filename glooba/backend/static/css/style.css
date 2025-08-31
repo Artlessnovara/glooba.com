@@ -117,3 +117,62 @@ body {
     font-weight: 600;
     margin-bottom: 30px;
 }
+
+/* Form Styles */
+.form-container {
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.form-container h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: lightgray;
+    font-size: 0.9rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    box-sizing: border-box; /* To include padding in the width */
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon span {
+    position: absolute;
+    left: 12px;
+    color: lightgray;
+}
+
+.input-with-icon input {
+    padding-left: 30px; /* Make space for the @ symbol */
+}
+
+.form-container .btn {
+    width: 100%;
+    margin-top: 10px;
+}
