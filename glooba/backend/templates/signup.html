@@ -9,7 +9,7 @@
 <body>
     <div class="form-container">
         <h2>Create your account</h2>
-        <form action="#" method="post">
+        <form action="{{ url_for('signup_email') }}" method="post">
             <div class="form-group">
                 <label for="fullname">Full Name</label>
                 <input type="text" id="fullname" name="fullname" required>
