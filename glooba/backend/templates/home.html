@@ -3,9 +3,31 @@
 {% block title %}Home - GLOOBA{% endblock %}
 
 {% block content %}
+    <div class="stories-row-container">
+        <div class="story-item add-story">
+            <a href="#">
+                <div class="story-avatar">
+                    <img src="{{ current_user.profile_pic or url_for('static', filename='uploads/profile_pics/default.png') }}" alt="Your Story">
+                    <div class="add-story-plus">+</div>
+                </div>
+                <span class="story-username">Add Story</span>
+            </a>
+        </div>
+        {% for story in stories %}
+            <div class="story-item">
+                <a href="#">
+                    <div class="story-avatar has-story-ring">
+                        <img src="{{ story.user.profile_pic or url_for('static', filename='uploads/profile_pics/default.png') }}" alt="{{ story.user.username }}'s Story">
+                    </div>
+                    <span class="story-username">{{ story.user.username }}</span>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
     <div class="home-feed">
         <h1>Home Feed</h1>
         <p>Welcome, {{ current_user.username }}!</p>
-        <!-- Stories row and main feed content will go here -->
+        <!-- Main feed content will go here -->
     </div>
 {% endblock %}

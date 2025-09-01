@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 from glooba.backend.config import Config
 from glooba.backend.extensions import db, migrate, login_manager
 from glooba.backend.models.user import User
+from glooba.backend.models.story import Story
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -21,8 +22,8 @@ def create_app(config_class=Config):
 
     login_manager.login_view = 'login'
 
-    with app.app_context():
-        db.create_all()
+    # with app.app_context():
+    #     db.create_all()
 
     @app.route('/')
     def splash():
@@ -31,7 +32,8 @@ def create_app(config_class=Config):
     @app.route('/home')
     @login_required
     def home():
-        return render_template('home.html')
+        stories = Story.query.order_by(Story.timestamp.desc()).all()
+        return render_template('home.html', stories=stories)
 
     @app.route('/welcome')
     def welcome():
