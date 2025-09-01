@@ -3,6 +3,14 @@
 {% block title %}Home - GLOOBA{% endblock %}
 
 {% block content %}
+    <div class="post-input-bar">
+        <a href="{{ url_for('composer') }}" class="post-input-link-main">
+            <img src="{{ current_user.profile_pic or url_for('static', filename='uploads/profile_pics/default.png') }}" alt="Your Profile Picture" class="post-input-avatar">
+            <div class="post-input-placeholder">Globalize your thought</div>
+        </a>
+        <a href="#" class="post-input-icon">🖼️</a>
+    </div>
+
     <div class="stories-row-container">
         <div class="story-item add-story">
             <a href="#">

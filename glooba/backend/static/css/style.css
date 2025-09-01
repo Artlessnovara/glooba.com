@@ -482,3 +482,41 @@ body {
     line-height: 1;
     border: 2px solid #121212;
 }
+
+/* Post Input Bar Styles */
+.post-input-bar {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #333;
+}
+
+.post-input-link-main {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    text-decoration: none;
+}
+
+.post-input-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.post-input-placeholder {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 20px;
+    padding: 8px 15px;
+    color: lightgray;
+    flex-grow: 1;
+}
+
+.post-input-icon {
+    font-size: 1.5rem;
+    color: #00E0FF;
+    text-decoration: none;
+    margin-left: 10px;
+}

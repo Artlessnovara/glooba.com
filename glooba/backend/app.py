@@ -115,4 +115,9 @@ def create_app(config_class=Config):
     def personalization():
         return render_template('personalization.html')
 
+    @app.route('/composer')
+    @login_required
+    def composer():
+        return render_template('composer.html')
+
     return app
