@@ -35,7 +35,7 @@
 
     <div class="home-feed">
         {% for post in posts %}
-            <article class="post-container">
+            <article class="post-container" data-post-id="{{ post.id }}">
                 <div class="post-header">
                     <img src="{{ post.user.profile_pic or url_for('static', filename='uploads/profile_pics/default.png') }}" alt="{{ post.user.username }}'s avatar" class="post-avatar">
                     <div class="post-user-info">
@@ -62,16 +62,23 @@
 
                 <div class="post-engagement">
                     <div class="engagement-icons">
-                        <span>❤️</span>
-                        <span>💬</span>
-                        <span>🌀</span>
-                        <span>📤</span>
+                        <span class="like-btn">❤️</span>
+                        <span class="comment-btn">💬</span>
+                        <span class="glow-btn">🌀</span>
+                        <span class="share-btn">📤</span>
                     </div>
                     <div class="engagement-counters">
-                        <span>{{ post.likes_count }} Likes</span>
-                        <span>{{ post.comments_count }} Comments</span>
-                        <span>{{ post.glows_count }} Glows</span>
+                        <span class="likes-count">{{ post.likes_count }} Likes</span>
+                        <span class="comments-count">{{ post.comments_count }} Comments</span>
+                        <span class="glows-count">{{ post.glows_count }} Glows</span>
+                        <span class="shares-count">{{ post.shares_count }} Shares</span>
                     </div>
+                </div>
+                <div class="comment-section" style="display: none;">
+                    <form class="comment-form" method="POST">
+                        <input type="text" name="comment" class="comment-input" placeholder="Add a comment..." required>
+                        <button type="submit" class="btn btn-primary btn-sm">Post</button>
+                    </form>
                 </div>
             </article>
         {% endfor %}

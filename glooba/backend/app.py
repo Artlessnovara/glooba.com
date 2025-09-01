@@ -7,6 +7,7 @@ from glooba.backend.extensions import db, migrate, login_manager
 from glooba.backend.models.user import User
 from glooba.backend.models.story import Story
 from glooba.backend.models.post import Post
+from glooba.backend.models.interaction import Like, Comment, Glow, Share
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -121,6 +122,51 @@ def create_app(config_class=Config):
     @login_required
     def composer():
         return render_template('composer.html')
+
+    # --- API Routes for Interactions ---
+    @app.route('/like_post/<int:post_id>', methods=['POST'])
+    @login_required
+    def like_post(post_id):
+        post = Post.query.get_or_404(post_id)
+        like = Like.query.filter_by(user_id=current_user.id, post_id=post.id).first()
+        if like:
+            db.session.delete(like)
+            post.likes_count -= 1
+        else:
+            like = Like(user_id=current_user.id, post_id=post.id)
+            db.session.add(like)
+            post.likes_count += 1
+        db.session.commit()
+        return {"likes": post.likes_count, "liked": not not like}
+
+    @app.route('/comment_on_post/<int:post_id>', methods=['POST'])
+    @login_required
+    def comment_on_post(post_id):
+        post = Post.query.get_or_404(post_id)
+        comment_text = request.form.get('comment')
+        if comment_text:
+            comment = Comment(content=comment_text, user_id=current_user.id, post_id=post.id)
+            db.session.add(comment)
+            post.comments_count += 1
+            db.session.commit()
+        return redirect(url_for('home'))
+
+    @app.route('/glow_post/<int:post_id>', methods=['POST'])
+    @login_required
+    def glow_post(post_id):
+        post = Post.query.get_or_404(post_id)
+        # For simplicity, we're just incrementing. A real app might have more complex logic.
+        post.glows_count += 1
+        db.session.commit()
+        return {"glows": post.glows_count}
+
+    @app.route('/share_post/<int:post_id>', methods=['POST'])
+    @login_required
+    def share_post(post_id):
+        post = Post.query.get_or_404(post_id)
+        post.shares_count += 1
+        db.session.commit()
+        return {"shares": post.shares_count}
 
     @app.cli.command("create-dummy-data")
     def create_dummy_data():
