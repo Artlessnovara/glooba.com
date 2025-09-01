@@ -47,7 +47,21 @@ def create_app(config_class=Config):
     @app.route('/signup/email', methods=['GET', 'POST'])
     def signup_email():
         if request.method == 'POST':
-            # ... (signup logic)
+            full_name = request.form.get('fullname')
+            username = request.form.get('username')
+            email = request.form.get('email')
+            password = request.form.get('password')
+            if not all([full_name, username, email, password]):
+                flash('All fields are required.')
+                return redirect(url_for('signup_email'))
+            if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
+                flash('Username or email already exists.')
+                return redirect(url_for('signup_email'))
+            new_user = User(full_name=full_name, username=username, email=email)
+            new_user.set_password(password)
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user, remember=True)
             return redirect(url_for('profile_setup'))
         return render_template('signup.html')
 
@@ -61,6 +75,14 @@ def create_app(config_class=Config):
         logout_user()
         return redirect(url_for('welcome'))
 
+    @app.route('/forgot_password', methods=['GET', 'POST'])
+    def forgot_password():
+        # Full logic for sending reset emails is a future feature
+        if request.method == 'POST':
+            flash("If an account with that email exists, password reset instructions have been sent.")
+            return redirect(url_for('login'))
+        return render_template('forgot_password.html')
+
     @app.route('/profile/setup', methods=['GET', 'POST'])
     @login_required
     def profile_setup():
@@ -73,6 +95,17 @@ def create_app(config_class=Config):
     @login_required
     def personalization():
         return render_template('personalization.html')
+
+    @app.route('/onboarding')
+    @login_required
+    def onboarding():
+        return render_template('onboarding.html')
+
+    @app.route('/check_username', methods=['POST'])
+    def check_username():
+        username = request.json.get('username')
+        user = User.query.filter_by(username=username).first()
+        return {"available": user is None}
 
     @app.route('/composer', methods=['GET', 'POST'])
     @login_required

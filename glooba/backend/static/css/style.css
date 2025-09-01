@@ -587,6 +587,16 @@ body {
     cursor: pointer;
 }
 
+/* Password Strength Indicator */
+.password-strength {
+    height: 5px;
+    width: 0%; /* Start with 0 width */
+    background-color: #ff4d4d; /* Weak */
+    border-radius: 5px;
+    margin-top: 5px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
 /* Post Details Styles */
 .glow-status-bar {
     padding: 5px 15px;

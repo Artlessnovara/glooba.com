@@ -72,4 +72,55 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // --- Live Username Availability Check ---
+    const usernameInput = document.getElementById('username');
+    const availabilityCheck = document.querySelector('.availability-check');
+    if (usernameInput && availabilityCheck) {
+        usernameInput.addEventListener('keyup', function() {
+            const username = this.value;
+            if (username.length > 2) {
+                fetch('/check_username', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: username })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.available) {
+                        availabilityCheck.textContent = `@${username} is available!`;
+                        availabilityCheck.style.color = '#00E0FF';
+                    } else {
+                        availabilityCheck.textContent = `@${username} is taken.`;
+                        availabilityCheck.style.color = '#ff4d4d';
+                    }
+                });
+            } else {
+                availabilityCheck.textContent = '';
+            }
+        });
+    }
+
+    // --- Password Strength Indicator ---
+    const passwordStrengthInput = document.querySelector('#signup .password-group input');
+    const strengthIndicator = document.querySelector('.password-strength');
+    if (passwordStrengthInput && strengthIndicator) {
+        passwordStrengthInput.addEventListener('keyup', function() {
+            const password = this.value;
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/[0-9]/)) strength++;
+            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+
+            strengthIndicator.style.width = `${strength * 25}%`;
+            if (strength <= 1) {
+                strengthIndicator.style.backgroundColor = '#ff4d4d'; // Weak
+            } else if (strength <= 3) {
+                strengthIndicator.style.backgroundColor = '#FFA500'; // Medium
+            } else {
+                strengthIndicator.style.backgroundColor = '#00E0FF'; // Strong
+            }
+        });
+    }
 });
