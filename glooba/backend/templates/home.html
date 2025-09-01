@@ -45,7 +45,16 @@
                     <div class="post-options">...</div>
                 </div>
                 <div class="post-content">
-                    <p>{{ post.content }}</p>
+                    {% if post.content %}<p>{{ post.content }}</p>{% endif %}
+                    {% if post.media_url %}
+                        <div class="post-media">
+                            {% if post.media_type == 'image' %}
+                                <img src="{{ url_for('static', filename=post.media_url) }}" alt="Post image">
+                            {% elif post.media_type == 'video' %}
+                                <video src="{{ url_for('static', filename=post.media_url) }}" controls></video>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 {% if post.glows_count > 0 %}

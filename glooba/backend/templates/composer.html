@@ -3,9 +3,17 @@
 {% block title %}Create Post - GLOOBA{% endblock %}
 
 {% block content %}
-    <div class="composer-container">
-        <h1>Create Post</h1>
-        <textarea placeholder="Globalize your thought..."></textarea>
-        <button class="btn btn-primary">Post</button>
+    <div class="composer-container form-container">
+        <h2>Create Post</h2>
+        <form action="{{ url_for('composer') }}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <textarea name="content" class="composer-textarea" placeholder="Globalize your thought..." rows="5"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="media">Upload Photo or Video</label>
+                <input type="file" id="media" name="media" class="media-input" accept="image/*,video/*">
+            </div>
+            <button type="submit" class="btn btn-primary">Post</button>
+        </form>
     </div>
 {% endblock %}

@@ -1,8 +1,8 @@
-"""Add interaction models
+"""Add media fields to Post model
 
-Revision ID: 4116d02e21f9
+Revision ID: 1f3551caf85a
 Revises:
-Create Date: 2025-09-01 09:47:28.975954
+Create Date: 2025-09-01 11:02:38.618743
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4116d02e21f9'
+revision = '1f3551caf85a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -36,7 +36,9 @@ def upgrade():
 
     op.create_table('post',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('content', sa.Text(), nullable=False),
+    sa.Column('content', sa.Text(), nullable=True),
+    sa.Column('media_type', sa.String(length=10), nullable=True),
+    sa.Column('media_url', sa.String(length=256), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('likes_count', sa.Integer(), nullable=True),

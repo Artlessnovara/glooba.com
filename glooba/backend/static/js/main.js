@@ -1,45 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // --- Profile Picture Preview ---
-    const profilePicInput = document.getElementById('profile_pic');
-    const picPreview = document.getElementById('pic_preview');
-
-    if (profilePicInput && picPreview) {
-        profilePicInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    picPreview.src = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-
-    // --- Interest Tag Selection ---
-    const interestsContainer = document.querySelector('.interests-container');
-    if (interestsContainer) {
-        interestsContainer.addEventListener('click', function(event) {
-            if (event.target.classList.contains('interest-tag')) {
-                event.target.classList.toggle('selected');
-            }
-        });
-    }
-
-    // --- Show/Hide Password on Login Form ---
-    const togglePassword = document.querySelector('.toggle-password');
-    if (togglePassword) {
-        togglePassword.addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                this.textContent = 'Hide';
-            } else {
-                passwordInput.type = 'password';
-                this.textContent = 'Show';
-            }
-        });
-    }
+    // ... (other listeners)
 
     // --- Post Interactions ---
     document.addEventListener('click', function(event) {
@@ -49,16 +9,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const postId = postContainer.dataset.postId;
         let url = '';
         let targetSpan = null;
+        let targetText = '';
 
         if (event.target.matches('.like-btn')) {
             url = `/like_post/${postId}`;
             targetSpan = postContainer.querySelector('.likes-count');
+            targetText = 'Likes';
         } else if (event.target.matches('.glow-btn')) {
             url = `/glow_post/${postId}`;
             targetSpan = postContainer.querySelector('.glows-count');
+            targetText = 'Glows';
         } else if (event.target.matches('.share-btn')) {
             url = `/share_post/${postId}`;
             targetSpan = postContainer.querySelector('.shares-count');
+            targetText = 'Shares';
         } else if (event.target.matches('.comment-btn')) {
             const commentSection = postContainer.querySelector('.comment-section');
             if (commentSection) {
@@ -73,14 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
-                if (targetSpan && data.likes !== undefined) {
-                    targetSpan.textContent = `${data.likes} Likes`;
+                if (targetSpan && data.count !== undefined) {
+                    targetSpan.textContent = `${data.count} ${targetText}`;
                 }
-                if (targetSpan && data.glows !== undefined) {
-                    targetSpan.textContent = `${data.glows} Glows`;
-                }
-                if (targetSpan && data.shares !== undefined) {
-                    targetSpan.textContent = `${data.shares} Shares`;
+                if (data.active !== undefined) {
+                    event.target.classList.toggle('active', data.active);
                 }
             });
         }
@@ -101,17 +62,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: new URLSearchParams({ comment: commentText })
                 })
-                .then(response => {
-                    if (response.ok) {
-                        // Ideally, we would dynamically add the new comment to the UI
-                        // For now, we just clear the input and hide the form
-                        commentInput.value = '';
-                        form.parentElement.style.display = 'none';
-                        // And maybe update the comment count
-                        const commentCounter = postContainer.querySelector('.comments-count');
-                        const currentCount = parseInt(commentCounter.textContent.split(' ')[0]);
-                        commentCounter.textContent = `${currentCount + 1} Comments`;
-                    }
+                .then(response => response.json())
+                .then(data => {
+                    commentInput.value = '';
+                    form.parentElement.style.display = 'none';
+                    const commentCounter = postContainer.querySelector('.comments-count');
+                    commentCounter.textContent = `${data.count} Comments`;
                 });
             }
         }

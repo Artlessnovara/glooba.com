@@ -637,3 +637,12 @@ body {
     font-size: 0.9rem;
     padding: 0 15px;
 }
+
+.post-media {
+    margin-top: 10px;
+}
+
+.post-media img, .post-media video {
+    max-width: 100%;
+    border-radius: 8px;
+}
