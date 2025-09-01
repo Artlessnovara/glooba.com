@@ -1,8 +1,8 @@
-"""Initial migration with User and Story models
+"""Initial migration with User, Story, and Post models
 
-Revision ID: bcb7029d79fa
+Revision ID: d56f08f22bf3
 Revises:
-Create Date: 2025-09-01 05:39:54.663413
+Create Date: 2025-09-01 07:39:18.608158
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'bcb7029d79fa'
+revision = 'd56f08f22bf3'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,6 +34,17 @@ def upgrade():
         batch_op.create_index(batch_op.f('ix_user_email'), ['email'], unique=True)
         batch_op.create_index(batch_op.f('ix_user_username'), ['username'], unique=True)
 
+    op.create_table('post',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('content', sa.Text(), nullable=False),
+    sa.Column('timestamp', sa.DateTime(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    with op.batch_alter_table('post', schema=None) as batch_op:
+        batch_op.create_index(batch_op.f('ix_post_timestamp'), ['timestamp'], unique=False)
+
     op.create_table('story',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('image_url', sa.String(length=256), nullable=False),
@@ -54,6 +65,10 @@ def downgrade():
         batch_op.drop_index(batch_op.f('ix_story_timestamp'))
 
     op.drop_table('story')
+    with op.batch_alter_table('post', schema=None) as batch_op:
+        batch_op.drop_index(batch_op.f('ix_post_timestamp'))
+
+    op.drop_table('post')
     with op.batch_alter_table('user', schema=None) as batch_op:
         batch_op.drop_index(batch_op.f('ix_user_username'))
         batch_op.drop_index(batch_op.f('ix_user_email'))

@@ -34,8 +34,28 @@
     </div>
 
     <div class="home-feed">
-        <h1>Home Feed</h1>
-        <p>Welcome, {{ current_user.username }}!</p>
-        <!-- Main feed content will go here -->
+        {% for post in posts %}
+            <article class="post-container">
+                <div class="post-header">
+                    <img src="{{ post.user.profile_pic or url_for('static', filename='uploads/profile_pics/default.png') }}" alt="{{ post.user.username }}'s avatar" class="post-avatar">
+                    <div class="post-user-info">
+                        <a href="#" class="post-username">{{ post.user.username }}</a>
+                        <span class="post-timestamp">{{ post.timestamp.strftime('%b %d') }}</span>
+                    </div>
+                    <div class="post-options">...</div>
+                </div>
+                <div class="post-content">
+                    <p>{{ post.content }}</p>
+                </div>
+                <div class="post-engagement">
+                    <div class="engagement-group">
+                        <span>❤️ 245</span>
+                        <span>💬 78</span>
+                        <span>🌀 320</span>
+                        <span>📤 12</span>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
     </div>
 {% endblock %}

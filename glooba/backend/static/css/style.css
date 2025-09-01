@@ -520,3 +520,69 @@ body {
     text-decoration: none;
     margin-left: 10px;
 }
+
+/* Main Feed Styles */
+.post-container {
+    padding: 15px 0;
+    border-bottom: 1px solid #333;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    margin-bottom: 10px;
+}
+
+.post-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.post-user-info {
+    flex-grow: 1;
+}
+
+.post-username {
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.post-timestamp {
+    color: lightgray;
+    font-size: 0.8rem;
+    display: block;
+}
+
+.post-options {
+    color: lightgray;
+    font-size: 1.5rem;
+}
+
+.post-content {
+    padding: 0 15px;
+    margin-bottom: 10px;
+}
+
+.post-content p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.post-engagement {
+    padding: 0 15px;
+}
+
+.engagement-group {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    color: lightgray;
+}
+
+.engagement-group span {
+    cursor: pointer;
+}

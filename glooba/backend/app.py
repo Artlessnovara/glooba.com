@@ -6,6 +6,7 @@ from glooba.backend.config import Config
 from glooba.backend.extensions import db, migrate, login_manager
 from glooba.backend.models.user import User
 from glooba.backend.models.story import Story
+from glooba.backend.models.post import Post
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -33,7 +34,8 @@ def create_app(config_class=Config):
     @login_required
     def home():
         stories = Story.query.order_by(Story.timestamp.desc()).all()
-        return render_template('home.html', stories=stories)
+        posts = Post.query.order_by(Post.timestamp.desc()).all()
+        return render_template('home.html', stories=stories, posts=posts)
 
     @app.route('/welcome')
     def welcome():
@@ -119,5 +121,32 @@ def create_app(config_class=Config):
     @login_required
     def composer():
         return render_template('composer.html')
+
+    @app.cli.command("create-dummy-data")
+    def create_dummy_data():
+        """Creates dummy users, stories, and posts for testing."""
+        db.session.remove()
+        db.drop_all()
+        db.create_all()
+
+        user1 = User(full_name="Alice", username="alice", email="alice@glooba.com")
+        user1.set_password("password")
+        user2 = User(full_name="Bob", username="bob", email="bob@glooba.com")
+        user2.set_password("password")
+        db.session.add_all([user1, user2])
+        db.session.commit()
+
+        story1 = Story(image_url="https://via.placeholder.com/300x500", user_id=user1.id)
+        story2 = Story(image_url="https://via.placeholder.com/300x500", user_id=user2.id)
+        story3 = Story(image_url="https://via.placeholder.com/300x500", user_id=user1.id)
+        db.session.add_all([story1, story2, story3])
+
+        post1 = Post(content="This is the first post on GLOOBA! #firstpost", user_id=user1.id)
+        post2 = Post(content="Having a great day exploring the new app.", user_id=user2.id)
+        post3 = Post(content="What is everyone up to? @bob", user_id=user1.id)
+        db.session.add_all([post1, post2, post3])
+
+        db.session.commit()
+        print("Dummy data created.")
 
     return app
