@@ -586,3 +586,54 @@ body {
 .engagement-group span {
     cursor: pointer;
 }
+
+/* Post Details Styles */
+.glow-status-bar {
+    padding: 5px 15px;
+    margin: 10px 0;
+}
+
+.glow-status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: white;
+}
+
+.glowing {
+    background: linear-gradient(90deg, #00E0FF, #00BFFF);
+}
+
+.shining {
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+}
+
+.blazing {
+    background: linear-gradient(90deg, #FF4500, #FF0000);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+    70% { box-shadow: 0 0 10px 15px rgba(255, 0, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+}
+
+.engagement-icons {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    font-size: 1.5rem;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    margin: 10px 0;
+}
+
+.engagement-counters {
+    display: flex;
+    gap: 15px;
+    color: lightgray;
+    font-size: 0.9rem;
+    padding: 0 15px;
+}

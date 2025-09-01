@@ -47,12 +47,30 @@
                 <div class="post-content">
                     <p>{{ post.content }}</p>
                 </div>
+
+                {% if post.glows_count > 0 %}
+                <div class="glow-status-bar">
+                    {% if post.glows_count >= 1000 %}
+                        <span class="glow-status blazing">Blazing</span>
+                    {% elif post.glows_count >= 100 %}
+                        <span class="glow-status shining">Shining</span>
+                    {% else %}
+                        <span class="glow-status glowing">Glowing</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+
                 <div class="post-engagement">
-                    <div class="engagement-group">
-                        <span>❤️ 245</span>
-                        <span>💬 78</span>
-                        <span>🌀 320</span>
-                        <span>📤 12</span>
+                    <div class="engagement-icons">
+                        <span>❤️</span>
+                        <span>💬</span>
+                        <span>🌀</span>
+                        <span>📤</span>
+                    </div>
+                    <div class="engagement-counters">
+                        <span>{{ post.likes_count }} Likes</span>
+                        <span>{{ post.comments_count }} Comments</span>
+                        <span>{{ post.glows_count }} Glows</span>
                     </div>
                 </div>
             </article>

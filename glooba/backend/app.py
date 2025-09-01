@@ -141,9 +141,9 @@ def create_app(config_class=Config):
         story3 = Story(image_url="https://via.placeholder.com/300x500", user_id=user1.id)
         db.session.add_all([story1, story2, story3])
 
-        post1 = Post(content="This is the first post on GLOOBA! #firstpost", user_id=user1.id)
-        post2 = Post(content="Having a great day exploring the new app.", user_id=user2.id)
-        post3 = Post(content="What is everyone up to? @bob", user_id=user1.id)
+        post1 = Post(content="This is the first post on GLOOBA! #firstpost", user_id=user1.id, likes_count=245, comments_count=78, glows_count=320, shares_count=12)
+        post2 = Post(content="Having a great day exploring the new app.", user_id=user2.id, likes_count=102, comments_count=15, glows_count=99, shares_count=5)
+        post3 = Post(content="What is everyone up to? @bob", user_id=user1.id, likes_count=500, comments_count=150, glows_count=1200, shares_count=50)
         db.session.add_all([post1, post2, post3])
 
         db.session.commit()

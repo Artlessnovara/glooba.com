@@ -9,5 +9,10 @@ class Post(db.Model):
 
     user = db.relationship('User', backref=db.backref('posts', lazy=True))
 
+    likes_count = db.Column(db.Integer, default=0)
+    comments_count = db.Column(db.Integer, default=0)
+    glows_count = db.Column(db.Integer, default=0)
+    shares_count = db.Column(db.Integer, default=0)
+
     def __repr__(self):
         return f'<Post {self.id}>'
